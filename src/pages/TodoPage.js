@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup';
-import { useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+import { Link, useParams } from 'react-router-dom';
 
 export default function TodoPage() {
-    const {todoId} = useParams()
-    
-    console.log(todoId)
+    const { todoId } = useParams()
 
     const [todos, setTodos] = useState([])
     const getTodo = () => {
@@ -17,10 +16,15 @@ export default function TodoPage() {
     useEffect(() => {
         getTodo()
     }, [])
-    
+
     return (
-        <div>
-            <ListGroup>
+        <div className='container mt-3'>
+            <Link to='/'>
+            <Button variant="primary">
+                Back
+            </Button>
+            </Link>
+            <ListGroup className='mt-2'>
                 <ListGroup.Item
                     as="li"
                     className="d-flex justify-content-between align-items-start"

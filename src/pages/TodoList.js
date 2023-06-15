@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { Link } from 'react-router-dom';
+import AppContext from '../Context/MyContext';
 
 export default function TodoList() {
-    const [todos, setTodos] = useState([]);
+    const {todos, setTodos, value, setValue, setLoading, edit, setEdit} = useContext(AppContext)
+    
 
     const getTodo = () => {
         fetch("http://localhost:8000/api/todos")
@@ -28,7 +30,16 @@ export default function TodoList() {
         
     }
 
-
+    const handleUpdate = (todoId) =>{
+        fetch(`http://localhost:8000/api/todos/${todoId}`)
+        .then((response)=> response.json())
+        .then((response)=> {
+            setEdit(response)
+            setValue(response.title)
+        })
+        setLoading(true)
+        
+    }
 
     return (
         <div>
@@ -45,12 +56,15 @@ export default function TodoList() {
                             >
                                 
                                 <div className="ms-2 me-auto">
-                                <Link to={`/todo/:todo._id`}>
+                                <Link to={`/todo/${todo._id}`}>
                                     <div className="fw-bold">{todo.title}</div>
                                     
                                     </Link>
                                     {todo.status}
                                 </div>
+                                <Button className='mx-2' onClick={()=>handleUpdate(todo._id)} variant="success">
+                                &#9998;
+                                </Button>
                                 <Button onClick={()=>handleDelete(todo._id)} variant="danger">
                                     X
                                 </Button>
