@@ -26,7 +26,7 @@ const todoSchema = new Schema({
 const Todo = mongoose.model("Todo", todoSchema);
 
 async function main() {
-  await mongoose.connect('mongodb+srv://sagarsapkota0987:nRfKgo9aHBQvx4fi@cluster0.od95ydt.mongodb.net/?retryWrites=true&w=majority')
+  await mongoose.connect('mongo server')
 }
 
 main()
